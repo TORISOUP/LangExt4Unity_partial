@@ -257,6 +257,19 @@ namespace LangExt
         }
 
         /// <summary>
+        /// T型のOptionをU型のオプションに変換します。
+        /// 値がある場合のみに変換を適用します。
+        /// 変換は、T型を受け取りU型を返す関数として指定します。
+        /// </summary>
+        /// <typeparam name="U">変換先の型</typeparam>
+        /// <param name="f">変換に用いる関数</param>
+        /// <returns>変換した値</returns>
+        public Option<U> Map<U>(Func<T, U> f)
+        {
+            return this.hasValue ? new Option<U>(f(this.value)) : Option<U>.None;
+        }
+
+        /// <summary>
         /// 現在のオブジェクトが、同じ型の別のオブジェクトと等しいかどうかを判定します。
         /// Option.Noneで返された値と、型付きのNoneを比較した場合にfalseが返される点に注意してください。
         /// もしその場合にtrueを返してほしい場合は、EqualsではなくNonStrictEqualsを使用してください。
